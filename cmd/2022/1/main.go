@@ -1,6 +1,9 @@
 package main
 
-import "aoc2022/internal/day"
+import (
+	"aoc2022/internal/day"
+	"errors"
+)
 
 func main() {
 	day := day.New("Day 1", cmd, cmd2)
@@ -12,5 +15,5 @@ func cmd(input string) (string, error) {
 }
 
 func cmd2(input string) (string, error) {
-	return "2", nil
+	return "", errors.New("NOT IMPLEMENTED")
 }
