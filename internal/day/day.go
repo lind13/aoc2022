@@ -13,8 +13,6 @@ type Day struct {
 	cmds []Cmd
 }
 
-type state uint8
-
 func New(id string, cmd ...Cmd) *Day {
 	return &Day{
 		id:   id,
