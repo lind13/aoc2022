@@ -2,7 +2,6 @@ package main
 
 import (
 	"aoc2022/internal/day"
-	"aoc2022/pkg/chunks"
 	"aoc2022/pkg/data_structures/stack"
 	"strconv"
 	"strings"
@@ -13,18 +12,18 @@ func main() {
 	day.Run()
 }
 
-func getStacks() []*stack.Stack[string] {
+func getStacks() []stack.Stack[string] {
 	//Went faster to hardcode it... 😪
-	return []*stack.Stack[string]{
-		stack.NewFromArr([]string{"R", "N", "P", "G"}),
-		stack.NewFromArr([]string{"T", "J", "B", "L", "C", "S", "V", "H"}),
-		stack.NewFromArr([]string{"T", "D", "B", "M", "N", "L"}),
-		stack.NewFromArr([]string{"R", "V", "P", "S", "B"}),
-		stack.NewFromArr([]string{"G", "C", "Q", "S", "W", "M", "V", "H"}),
-		stack.NewFromArr([]string{"W", "Q", "S", "C", "D", "B", "J"}),
-		stack.NewFromArr([]string{"F", "Q", "L"}),
-		stack.NewFromArr([]string{"W", "M", "H", "T", "D", "L", "F", "V"}),
-		stack.NewFromArr([]string{"L", "P", "B", "V", "M", "J", "F"}),
+	return []stack.Stack[string]{
+		{"R", "N", "P", "G"},
+		{"T", "J", "B", "L", "C", "S", "V", "H"},
+		{"T", "D", "B", "M", "N", "L"},
+		{"R", "V", "P", "S", "B"},
+		{"G", "C", "Q", "S", "W", "M", "V", "H"},
+		{"W", "Q", "S", "C", "D", "B", "J"},
+		{"F", "Q", "L"},
+		{"W", "M", "H", "T", "D", "L", "F", "V"},
+		{"L", "P", "B", "V", "M", "J", "F"},
 	}
 }
 
@@ -64,19 +63,7 @@ func cmd2(input string) (string, error) {
 	instructions := processInput(input)
 
 	for _, instruction := range instructions {
-		arr := make([]int, instruction[0])
-		chunks := chunks.Create(arr, instruction[0])
-		for i := 0; i < len(chunks); i++ {
-			toMove := make([]string, len(chunks[i]))
-			for j := 0; j < len(chunks[i]); j++ {
-				toMove[j] = stacks[instruction[1]-1].Pop()
-			}
-			internalStack := stack.NewFromArr(toMove)
-			len := internalStack.Len()
-			for k := 0; k < len; k++ {
-				stacks[instruction[2]-1].Push(internalStack.Pop())
-			}
-		}
+		stacks[instruction[2]-1].PushN(stacks[instruction[1]-1].PopN(instruction[0]))
 	}
 
 	sb := strings.Builder{}
