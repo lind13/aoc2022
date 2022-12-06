@@ -14,30 +14,23 @@ func main() {
 func getIndex(input string, n int) int {
 	buf := bytes.NewBufferString(input)
 	sequence := make([]byte, 0, n)
-
-	i := 0
-	for {
-		i++
+	for i := 1; true; i++ {
 		b := buf.Next(1)
 		if len(b) == 0 {
-			i = -1
-			break
-		}
-
-		if len(sequence) == n {
-			i--
-			break
+			return -1
 		}
 
 		if !bytes.Contains(sequence, b) {
 			sequence = append(sequence, b...)
+			if len(sequence) == n {
+				return i
+			}
 		} else {
 			s := bytes.IndexByte(sequence, b[0])
-			sequence = sequence[s+1:]
-			sequence = append(sequence, b...)
+			sequence = append(sequence[s+1:], b...)
 		}
 	}
-	return i
+	return -1
 }
 
 func cmd(input string) (string, error) {
