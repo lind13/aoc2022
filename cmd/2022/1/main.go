@@ -13,8 +13,8 @@ func main() {
 	day.Run()
 }
 
-func cmd(input string) (string, error) {
-	inputArr := strings.Split(input, "\n")
+func cmd(input []byte) (string, error) {
+	inputArr := strings.Split(string(input), "\n")
 	calorieElfMap := make(map[int]int)
 
 	elf := 1
@@ -46,8 +46,8 @@ func cmd(input string) (string, error) {
 	return fmt.Sprint(count), nil
 }
 
-func cmd2(input string) (string, error) {
-	inputArr := strings.Split(input, "\n")
+func cmd2(input []byte) (string, error) {
+	inputArr := strings.Split(string(input), "\n")
 	calorieElfMap := make(map[int]int)
 
 	elf := 1

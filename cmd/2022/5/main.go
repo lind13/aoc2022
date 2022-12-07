@@ -40,9 +40,9 @@ func processInput(input string) [][3]int {
 	return moves
 }
 
-func cmd(input string) (string, error) {
+func cmd(input []byte) (string, error) {
 	stacks := getStacks()
-	instructions := processInput(input)
+	instructions := processInput(string(input))
 
 	for _, instruction := range instructions {
 		for i := 0; i < instruction[0]; i++ {
@@ -58,9 +58,9 @@ func cmd(input string) (string, error) {
 	return sb.String(), nil
 }
 
-func cmd2(input string) (string, error) {
+func cmd2(input []byte) (string, error) {
 	stacks := getStacks()
-	instructions := processInput(input)
+	instructions := processInput(string(input))
 
 	for _, instruction := range instructions {
 		stacks[instruction[2]-1].PushN(stacks[instruction[1]-1].PopN(instruction[0]))

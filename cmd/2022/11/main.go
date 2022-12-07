@@ -7,6 +7,6 @@ func main() {
 	day.Run()
 }
 
-func cmd(input string) (string, error) {
-	return input, nil
+func cmd(input []byte) (string, error) {
+	return "", nil
 }

@@ -36,8 +36,8 @@ func main() {
 	day.Run()
 }
 
-func cmd(input string) (string, error) {
-	rounds := strings.Split(input, "\n")
+func cmd(input []byte) (string, error) {
+	rounds := strings.Split(string(input), "\n")
 	score := 0
 	for _, round := range rounds {
 		picks := strings.Split(round, " ")
@@ -80,8 +80,8 @@ func cmd(input string) (string, error) {
 	return fmt.Sprint(score), nil
 }
 
-func cmd2(input string) (string, error) {
-	rounds := strings.Split(input, "\n")
+func cmd2(input []byte) (string, error) {
+	rounds := strings.Split(string(input), "\n")
 	score := 0
 	for _, round := range rounds {
 		picks := strings.Split(round, " ")

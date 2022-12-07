@@ -11,8 +11,8 @@ func main() {
 	day.Run()
 }
 
-func getIndex(input string, n int) int {
-	buf := bytes.NewBufferString(input)
+func getIndex(input []byte, n int) int {
+	buf := bytes.NewBuffer(input)
 	sequence := make([]byte, 0, n)
 	for i := 1; true; i++ {
 		b := buf.Next(1)
@@ -33,10 +33,10 @@ func getIndex(input string, n int) int {
 	return -1
 }
 
-func cmd(input string) (string, error) {
+func cmd(input []byte) (string, error) {
 	return fmt.Sprint(getIndex(input, 4)), nil
 }
 
-func cmd2(input string) (string, error) {
+func cmd2(input []byte) (string, error) {
 	return fmt.Sprint(getIndex(input, 14)), nil
 }

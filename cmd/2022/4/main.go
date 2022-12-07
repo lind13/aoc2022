@@ -39,9 +39,9 @@ func isWithin(a, b [2]int) bool {
 	return false
 }
 
-func cmd(input string) (string, error) {
+func cmd(input []byte) (string, error) {
 	count := 0
-	for _, pair := range toPairs(input) {
+	for _, pair := range toPairs(string(input)) {
 		if isWithin(pair[0], pair[1]) {
 			count++
 		}
@@ -60,9 +60,9 @@ func isOverlap(a, b [2]int) bool {
 	return false
 }
 
-func cmd2(input string) (string, error) {
+func cmd2(input []byte) (string, error) {
 	count := 0
-	for _, pair := range toPairs(input) {
+	for _, pair := range toPairs(string(input)) {
 		if isOverlap(pair[0], pair[1]) {
 			count++
 		}

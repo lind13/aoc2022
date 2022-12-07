@@ -13,8 +13,8 @@ func main() {
 	day.Run()
 }
 
-func cmd(input string) (string, error) {
-	rucksacks := strings.Split(input, "\n")
+func cmd(input []byte) (string, error) {
+	rucksacks := strings.Split(string(input), "\n")
 	points := make([]int, 0, len(rucksacks))
 
 mainLoop:
@@ -45,8 +45,8 @@ func toPrio(r rune) int {
 	return int(r - 65 + 27)
 }
 
-func cmd2(input string) (string, error) {
-	groups := chunks.Create(strings.Split(input, "\n"), 3)
+func cmd2(input []byte) (string, error) {
+	groups := chunks.Create(strings.Split(string(input), "\n"), 3)
 	badgePoints := make([]int, 0, len(groups))
 
 	for _, group := range groups {
