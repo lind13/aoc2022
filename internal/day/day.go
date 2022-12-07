@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Cmd func(input string) (string, error)
+type Cmd func(input []byte) (string, error)
 
 type Day struct {
 	id   string
@@ -29,9 +29,8 @@ func (d *Day) Run() {
 	}
 
 	for i, cmd := range d.cmds {
-		stringInput := string(input)
 		start := time.Now()
-		result, err := cmd(stringInput)
+		result, err := cmd(input)
 		duration := time.Since(start)
 		if err != nil {
 			fmt.Printf("%d: %v\n", i+1, err)
