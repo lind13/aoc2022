@@ -4,6 +4,7 @@ import (
 	"aoc2022/internal/common"
 	"aoc2022/internal/day"
 	"aoc2022/pkg/data_structures/set"
+	"aoc2022/pkg/point"
 	"bytes"
 	"fmt"
 	"strconv"
@@ -15,7 +16,7 @@ type Step struct {
 }
 
 var (
-	deltas = map[rune]common.Point2D{
+	deltas = map[rune]point.Point2D{
 		'U': {X: 0, Y: 1},
 		'D': {X: 0, Y: -1},
 		'R': {X: 1, Y: 0},
@@ -42,40 +43,28 @@ func parseInput(input []byte) []Step {
 	return steps
 }
 
-func isAdjacent(head, tail common.Point2D) bool {
-	for dx := -1; dx <= 1; dx++ {
-		for dy := -1; dy <= 1; dy++ {
-			if tail.X+dx == head.X && tail.Y+dy == head.Y {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-func setNewPos(head, tail *common.Point2D) {
-	diffX := head.X - tail.X
-	diffY := head.Y - tail.Y
+func setNewPos(a, b *point.Point2D) {
+	diffX, diffY := a.X-b.X, a.Y-b.Y
 	switch {
 	case diffX > 0:
-		tail.X += 1
+		b.X += 1
 	case diffX < 0:
-		tail.X -= 1
+		b.X -= 1
 	}
 	switch {
 	case diffY > 0:
-		tail.Y += 1
+		b.Y += 1
 	case diffY < 0:
-		tail.Y -= 1
+		b.Y -= 1
 	}
 }
 
 func cmd(input []byte) (string, error) {
 	steps := parseInput(input)
-	coverage := set.New[common.Point2D]()
+	coverage := set.New[point.Point2D]()
 
-	head := common.Point2D{X: 0, Y: 0}
-	tail := common.Point2D{X: 0, Y: 0}
+	head := point.Point2D{X: 0, Y: 0}
+	tail := point.Point2D{X: 0, Y: 0}
 	coverage.Add(tail)
 
 	for _, step := range steps {
@@ -84,7 +73,7 @@ func cmd(input []byte) (string, error) {
 			head.X += delta.X
 			head.Y += delta.Y
 
-			if isAdjacent(head, tail) {
+			if tail.InReach(&head, 1) {
 				continue
 			}
 
@@ -97,11 +86,12 @@ func cmd(input []byte) (string, error) {
 }
 
 func cmd2(input []byte) (string, error) {
+	knots := 10
 	steps := parseInput(input)
-	coverage := set.New[common.Point2D]()
+	coverage := set.New[point.Point2D]()
 
-	points := make([]common.Point2D, 10)
-	coverage.Add(points[9])
+	points := make([]point.Point2D, 10)
+	coverage.Add(points[knots-1])
 
 	for _, step := range steps {
 		toMove := deltas[step.Direction]
@@ -111,12 +101,12 @@ func cmd2(input []byte) (string, error) {
 
 			for i := 0; i < 9; i++ {
 				lead, follower := points[i], &points[i+1]
-				if isAdjacent(lead, *follower) {
+				if follower.InReach(&lead, 1) {
 					continue
 				}
 				setNewPos(&lead, follower)
 			}
-			coverage.Add(points[9])
+			coverage.Add(points[knots-1])
 		}
 	}
 
